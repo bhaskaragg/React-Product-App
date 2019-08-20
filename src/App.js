@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Header from './components/HeaderComponent';
+
 
 class App extends Component {
   constructor() {
@@ -18,11 +17,8 @@ class App extends Component {
     )
   }
   handleval(event) {
-    const row=event.target;
-    console.log(row.name);
-    this.setState={
-      row: row
-    }
+    const row=event.currentTarget;
+    console.log(row);
   }
   render() {
   const datas=[
