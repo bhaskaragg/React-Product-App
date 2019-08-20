@@ -6,20 +6,18 @@ class App extends Component {
   constructor() {
     super();
     this.state={
-      dis:false,
-      row:''
+      id: -1
     }
     this.handleval = this.handleval.bind(this);
   }
-  details(row) {
-    return(
-      row
-    )
-  }
-  handleval(event) {
+  handleval(event,key) {
     const row=event.currentTarget;
-    console.log(row);
+    console.log(row,key);
+    this.setState({
+      id : key
+    })
   }
+
   render() {
   const datas=[
     { id: 1, name: 'Test 1', age: 27, city: 'Pune', mark: 89, suggestions: [4, 5, 7] },
@@ -37,12 +35,26 @@ class App extends Component {
   ];
   const dataval = datas.map((data)=>{
     return (
-      <tr key={data.id} onClick={this.handleval}>
+      <tr key={data.id} onClick={(e)=>this.handleval(e,data.id)}>
         <td>{data.name}</td>
         <td>{data.age}</td>
         <td>{data.city}</td>
         </tr>
     )
+  })
+  const selectData = datas.map((data)=> {
+    if(data.id==this.state.id){
+      return(
+      <tr>
+        <td>{data.name}</td>
+        <td>{data.age}</td>
+        <td>{data.city}</td>
+        <td onClick={(e)=>this.handleval(e,data.suggestions[0])}>{data.suggestions[0]}</td>
+        <td onClick={(e)=>this.handleval(e,data.suggestions[1])}>{data.suggestions[1]}</td>
+        <td onClick={(e)=>this.handleval(e,data.suggestions[2])}>{data.suggestions[2]}</td>
+        </tr>
+      );
+    }
   })
   return (
    <div style={{display:'inline-block'}}>
@@ -60,9 +72,18 @@ class App extends Component {
       </tr>
       {dataval}
     </table>
-    <div >
-      {this.state.row}
-      </div>  
+    <br/>
+        <br/>
+        <br/>
+    <div>
+    {this.state.id!=-1?
+    <table>
+      {selectData}
+      </table>
+      :
+      <span></span>
+    }
+    </div>  
     </div>
 
   );
