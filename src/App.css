@@ -1,0 +1,101 @@
+.row-header {
+  margin: 0px auto;
+  padding: 0px auto;
+}
+
+.row-content {
+  margin: 0px auto;
+  padding: 50px 0px 50px 0px;
+  border-bottom: 1px ridge;
+  min-height: 400px;
+}
+
+.jumbotron {
+  width: 1160px;
+  padding: 70px 30px 70px 30px;
+  margin: 0px auto;
+  background: #9575CD;
+  color: floralwhite;
+  font-size: 1rem;
+}
+
+.category {
+  border: 1px solid #CCE2FF;
+  margin-bottom: 10px;
+  padding: 5px;
+  color: black;
+  border-radius: 4px;
+  background: #CCE2FF;
+  text-align: center;
+  font-size: 200%;
+}
+
+.cart-container {
+  background: white;
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.summary-container {
+  padding-top: 20px;
+}
+
+.filter-container {
+  background: white;
+  padding: 10px;
+}
+
+.cart-total {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.hr {
+  border-bottom: 2px solid gray;
+}
+
+.ingredients {
+  color: gray;
+}
+
+.btn-remove {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
+
+.success {
+  font-size: 14px;
+  color: green;
+  word-break: break-word;
+}
+
+.inputBox {
+  height: 30px;
+  width: 100%;
+  color: #222;
+  border: solid 1px #88b0c0;
+  border-radius: 3px;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: red;
+}
+
+.discounted-price {
+  color: green;
+}
