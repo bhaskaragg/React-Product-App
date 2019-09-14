@@ -1,6 +1,21 @@
 import React,{Component} from 'react';
-import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
-    
+import { Form, Label, Input, Col, FormFeedback } from 'reactstrap';
+import {Link} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';  
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 class EditProduct extends Component {
     constructor(props){
         super(props);
@@ -55,7 +70,7 @@ class EditProduct extends Component {
         const target = event.target;
         const value = target.type === 'checkbox'? target.checked : target.value;
         if(target.type === 'radio'){
-            target.type === 'budget'?this.setState({
+            target.value === 'budget'?this.setState({
                 priceRange: '4k-6k'
             }): this.setState({
                 priceRange: '11k-20k'
@@ -96,122 +111,141 @@ class EditProduct extends Component {
         const errors = this.validate(this.state.name, this.state.weight, this.state.productUrl);  
         const enabled = this.isSubmitEnable();  
         return(
-        <div className="row row-content">
-                   <div className="col-12 mb-5">
-                      <h3 style={{textAlign:'center'}}>Edit The Item</h3>
+        <div className="row row-content" style={{width:'100%',padding:'0'}}>
+                   <div className="col-12">
+                      <h2 style={{textAlign:'center',backgroundColor : '#1abc9c',
+                                  color:'white',padding:20, marginRight:50, marginLeft:50,marginTop:20,marginBottom:30}}>Edit The Item</h2>
                    </div>
-                    <div className="col-12 col-md-9">
+                    <div className="col-12 mt-10">
                         <Form onSubmit={this.handleSubmit}>
-                            <FormGroup row>
-                                <Label htmlFor="name" md={2}>First Name</Label>
-                                <Col md={10}>
-                                    <Input type="text" id="name" name="name"
-                                        placeholder="Name"
-                                        value={this.state.name}
-                                        invalid={errors.name !== ''}
-                                        onBlur={this.handleBlur('name')}
-                                        onChange={this.handleInputChange} />
-                                    <FormFeedback>{errors.name}</FormFeedback>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label htmlFor="weight" md={2}>Weight</Label>
-                                <Col md={10}>
-                                    <Input type="text" id="weight" name="weight"
-                                        placeholder="Weight"
-                                        value={this.state.weight}
-                                        invalid={errors.weight !== ''}
-                                        onBlur={this.handleBlur('weight')}
-                                        onChange={this.handleInputChange} />
-                                    <FormFeedback>{errors.weight}</FormFeedback>
-                                </Col>                        
-                            </FormGroup>
-                            <FormGroup row>
-                            <Label htmlFor="availability" md={2}>Availability</Label>
-                                <Col md={10}>
-                                    <Input type="number" id="availability" name="availability"
-                                        placeholder="Availability"
-                                        value={this.state.availability}
-                                        onChange={this.handleInputChange} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label htmlFor="productUrl" md={2}>Product URL</Label>
-                                <Col md={10}>
-                                    <Input type="productUrl" id="productUrl" name="productUrl"
-                                        placeholder="Product Url"
-                                        value={this.state.productUrl}
-                                        invalid={errors.productUrl !== ''}
-                                        onBlur={this.handleBlur('productUrl')}
-                                        onChange={this.handleInputChange} />
-                                </Col>
-                                <FormFeedback>{errors.productUrl}</FormFeedback>
-                            </FormGroup>
-                            <FormGroup row>
-                            <Col md={{ size: 1, offset: 2 }}>
-                                        <Label>
-                                            <Input type="radio"
-                                                name="priceTier"
-                                                checked={this.state.priceTier === 'budget'}
-                                                value="budget"
-                                                onChange={this.handleInputChange} /> {' '}
-                                            <strong>Budget</strong>
-                                        </Label>
-                            </Col>
-                            <Col md={{ size: 1 }}>
-                                            <Label>
-                                                <Input type="radio"
-                                                    name="priceTier"
-                                                    checked={this.state.priceTier === 'premier'}
-                                                    value="premier"
-                                                    onChange={this.handleInputChange} /> {' '}
-                                                <strong>Premier</strong>
-                                            </Label>
-                                </Col>
-                            {this.state.priceTier==='budget'?
-                                <Col md={{size: 3,offset: 4}}>
-                                    <Input type="select" name="priceRange"
-                                            value={this.state.priceRange}
-                                            onChange={this.handleInputChange}>
-                                        <option>4k-6k</option>
-                                        <option>6k-9k</option>
-                                        <option>9k-11k</option>
-                                    </Input>
-                                </Col> :
-                                <Col md={{size: 3, offset: 4}}>
-                                    <Input type="select" name="priceRange"
-                                            value={this.state.priceRange}
-                                            onChange={this.handleInputChange}>
-                                        <option>11k-20k</option>
-                                        <option>20k-30k</option>
-                                        <option>30k+</option>
-                                    </Input>
-                                </Col>
-                            }
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col md={{size: 5, offset: 2}}>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input type="checkbox"
+                           
+                 <Paper style={{ padding: 30, marginRight: 50, marginLeft: 50}}>
+              <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    error={errors.name !== ''}
+                    onBlur={this.handleBlur('name')}
+                    onChange={this.handleInputChange}
+                    helperText={errors.name}
+                    name="name"
+                    type="text"
+                    label="Name"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    error={errors.weight !== ''}
+                    onBlur={this.handleBlur('weight')}
+                    onChange={this.handleInputChange}
+                    helperText={errors.weight}
+                    name="weight"
+                    type="text"
+                    label="Weight"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    onChange={this.handleInputChange}
+                    name="availability"
+                    type="number"
+                    label ="Availability"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    error={errors.productUrl !== ''}
+                    onBlur={this.handleBlur('productUrl')}
+                    onChange={this.handleInputChange}
+                    helperText={errors.productUrl}
+                    name="productUrl"
+                    type="productUrl"
+                    label="ProductUrl"
+                  />
+                </Grid>
+                <Grid item spacing={5}>
+                <RadioGroup row>
+                    <Label>
+                        <Radio type="radio"
+                            name="priceTier"
+                            checked={this.state.priceTier === 'premier'}
+                            value="premier"
+                            onChange={this.handleInputChange} /> {' '}
+                        <strong>Premier</strong>
+                    </Label>
+                    <Label>
+                        <Radio type="radio"
+                            name="priceTier"
+                            checked={this.state.priceTier === 'budget'}
+                            value = "budget"
+                            onChange={this.handleInputChange} /> {' '}
+                        <strong>Budget</strong>
+                    </Label>
+                </RadioGroup>
+                </Grid>
+                {this.state.priceTier==='budget'?
+                <Grid item xs={9} style={{margin:'0 0 0 40px'}}>
+                  <Select style={{textAlign:'center'}}
+                    fullWidth
+                    name="priceRange"
+                    label="Select Price Range"
+                    formControlProps={{ fullWidth: true }}
+                    value={this.state.priceRange}
+                    onChange={this.handleInputChange}>
+                    <MenuItem value="4k-6k">4k-6k</MenuItem>
+                    <MenuItem value="6k-9k">6k-9k</MenuItem>
+                    <MenuItem value="9k-11k">9k-11k</MenuItem>
+                  </Select>
+                </Grid> :
+                <Grid item xs={9} style={{margin:'0 0 0 40px'}}>
+                  <Select style={{textAlign:'center'}}
+                    fullWidth
+                    name="priceRange"
+                    label="Select Price Range"
+                    formControlProps={{ fullWidth: true }}
+                    value={this.state.priceRange}
+                    onChange={this.handleInputChange}>
+                    <MenuItem value="11k-20k">11k-20k</MenuItem>
+                    <MenuItem value="20k-30k">20k-30k</MenuItem>
+                    <MenuItem value="30k+">30k+</MenuItem>
+                  </Select>
+                </Grid>
+                }
+                <Grid item  spacing={3} style={{marginLeft:'10px'}}>
+                <FormGroup check>
+                                        <FormControlLabel label="Is is Editable"
+                                            control = {
+                                            <Checkbox type="checkbox"
                                                 name="isEditable"
                                                 checked={this.state.isEditable}
-                                                onChange={this.handleInputChange} /> {' '}
-                                            <strong>Is it Editable</strong>
-                                        </Label>
+                                                onChange={this.handleInputChange} />
+                                            }
+                                        /> 
                                     </FormGroup>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col md={{size: 8, offset: 4}}>
-                                    <Button type="submit" disabled={!enabled} className="btn btn-success"   >
-                                        Submit
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
-                    </div>
-               </div>
+                </Grid>
+                <Grid item xs={12} style={{ marginLeft:'550px' }}>
+                  <Link to="/">
+                       <Button
+                    variant="contained"
+                    color = "primary" > Cancel </Button>
+                    </Link>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={!enabled} style={{ marginLeft:'50px' }}> Save </Button>
+                </Grid>
+                </Grid>
+                </Paper>
+                 </Form>
+                </div>
+                </div>
         );
     }
 }
