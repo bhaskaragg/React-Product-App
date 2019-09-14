@@ -1,5 +1,17 @@
 import React, { Component} from 'react';
-import { Table} from 'reactstrap';
+// import { Table} from 'reactstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
+import grey from '@material-ui/core/colors/grey';
+import blue from '@material-ui/core/colors/blue';
+
 class Products extends Component {
 
     constructor(props){
@@ -10,37 +22,77 @@ class Products extends Component {
     }
 
     render(){
-    const productsList = this.props.products.map((data,index)=>{
-      return (
-                //For this scenario index as key will work
-                <tr key={index}> 
-                    <td>{index+1}</td>
-                    <td>{data.name}</td>
-                    <td className="text-center">{data.weight}gm</td>
-                    <td className="text-center">{data.availability}</td>
-                    <td className="text-center">
-                    <button id ={index} disabled={!data.isEditable} onClick={this.props.handleClick}>Edit</button></td>
-        </tr>
-      );
-    });
-
+      const styles = {
+    floatingActionButton: {
+      margin: 0,
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      position: 'fixed',
+    },
+    editButton: { 
+      fill: grey[500]
+    },
+    columns: {
+      id: {
+        width: '10%'
+      },
+      name: {
+        width: '40%'
+      },
+      weight: {
+        width: '20%'
+      },
+      availability: {
+        width: '20%'
+      },
+      edit: {
+        width: '10%'
+      }
+    }
+  };
+    
     return (
                 
                   <div className="animated fadeIn">
-                <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
-                  <thead className="thead-light">
-                  <tr>       
-                    <th>#</th>
-                    <th>Name</th>
-                    <th className="text-center">Weight</th>
-                    <th className="text-center">Availability</th>
-                    <th className="text-center">IsEditable</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                 {productsList}
-                  </tbody>
-                </Table>
+                   <div className="col-12 mb-5">
+                      <h2 style={{textAlign:'center',backgroundColor : '#1976d2',
+                                  color:'white',padding:10}}>Products List</h2>
+                   </div>
+                 <Paper spacing={3} style={{ padding: 15, marginRight: 30, marginLeft: 30}}>
+      <Table style={{minWidth:'650'}}>
+        <TableHead>
+          <TableRow>
+              <TableCell style={styles.columns.id}>ID</TableCell>            
+              <TableCell style={styles.columns.name}>Name</TableCell>            
+              <TableCell style={styles.columns.weight}>Weight</TableCell>            
+              <TableCell style={styles.columns.availability}>Availability</TableCell>            
+              <TableCell style={styles.columns.edit}>Edit</TableCell>            
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.props.products.map((item,index) => {
+            return(
+            <TableRow key={index}>
+              <TableCell style={styles.columns.id}>{index+1}</TableCell>            
+              <TableCell style={styles.columns.name}>{item.name}</TableCell>            
+              <TableCell style={styles.columns.weight}>{item.weight}gm</TableCell>            
+              <TableCell style={styles.columns.availability}>{item.availability}</TableCell>            
+              <TableCell style={styles.columns.edit}>
+               <Fab      id={index}       aria-label="edit"
+                                backgroundColor={grey[200]} disabled={!item.isEditable} onClick={this.props.handleClick}>
+                                <EditIcon />  
+              </Fab>
+              </TableCell>
+            </TableRow>
+            )
+          })
+
+        }
+        </TableBody>
+      </Table>
+      </Paper>
       </div>
     );
   }
